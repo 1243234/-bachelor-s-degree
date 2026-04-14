@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>教学 PPT 生成（DeepSeek）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #eef2ff;
+      --bg-mid: #f0f9ff;
+      --bg-warm: #fffbeb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --border-focus: #93c5fd;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --success-bg: #ecfdf5;
+      --success-text: #047857;
+      --error-bg: #fef2f2;
+      --error-text: #b91c1c;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 40px -10px rgba(37, 99, 235, 0.12), 0 8px 20px -12px rgba(15, 23, 42, 0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans SC", "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      line-height: 1.55;
+      background:
+        radial-gradient(ellipse 120% 80% at 0% -20%, rgba(191, 219, 254, 0.55), transparent 50%),
+        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(254, 243, 199, 0.45), transparent 45%),
+        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(224, 231, 255, 0.5), transparent 55%),
+        linear-gradient(165deg, var(--bg-base) 0%, #f8fafc 48%, var(--bg-mid) 100%);
+    }
+
+    .page {
+      max-width: 36rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3.5rem;
+      transition: max-width 0.25s ease;
+    }
+
+    .page.has-work {
+      max-width: 58rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-badge svg {
+      width: 1rem;
+      height: 1rem;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .sub {
+      margin: 0 auto;
+      max-width: 26rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.4rem 1.35rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-section {
+      margin-bottom: 1.35rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0.25rem;
+      padding-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 0 0 0.85rem;
+    }
+
+    label.field-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 0.62rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      margin-bottom: 1rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    input:hover,
+    select:hover {
+      border-color: #cbd5e1;
+      background: var(--surface);
+    }
+
+    input:focus-visible,
+    select:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      background: var(--surface);
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.65rem center;
+      padding-right: 2rem;
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      border: 1px solid #bfdbfe;
+    }
+
+    .row input[type="checkbox"] {
+      width: 1.05rem;
+      height: 1.05rem;
+      margin: 0.2rem 0 0;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .row label {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.45;
+      cursor: pointer;
+    }
+
+    .file-field {
+      margin-bottom: 0.25rem;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 0.5rem 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="file"]::file-selector-button {
+      margin-right: 0.75rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: var(--surface-2);
+      border-color: #cbd5e1;
+    }
+
+    input[type="file"]:disabled {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    input[type="file"]:disabled::file-selector-button {
+      cursor: not-allowed;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: -0.35rem 0 0.85rem;
+      line-height: 1.4;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      margin-top: 0.35rem;
+      padding: 0.78rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
+      background: linear-gradient(180deg, #3b82f6 0%, var(--accent) 100%);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    button[type="submit"]:hover:not(:disabled) {
+      filter: brightness(1.05);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+
+    button[type="submit"]:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      box-shadow: none;
+      filter: grayscale(0.15);
+    }
+
+    .msg {
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+
+    .msg.err {
+      color: var(--error-text);
+      background: var(--error-bg);
+      border: 1px solid #fecaca;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .work-panel {
+      margin-top: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem 1.4rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .work-panel[hidden] {
+      display: none !important;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.65rem;
+    }
+
+    .progress-head strong {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .progress-head span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #60a5fa, var(--accent));
+      transition: width 0.35s ease;
+    }
+
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      margin-top: 0.85rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .steps i {
+      font-style: normal;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      background: var(--surface-2);
+      border: 1px solid transparent;
+    }
+
+    .steps i.on {
+      color: var(--accent);
+      border-color: #bfdbfe;
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    .steps i.done {
+      color: var(--success-text);
+      border-color: #a7f3d0;
+      background: var(--success-bg);
+    }
+
+    .preview-head {
+      margin: 1.35rem 0 0.65rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .preview-head small {
+      display: block;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      font-size: 0.78rem;
+    }
+
+    .preview-rail {
+      display: flex;
+      gap: 0.85rem;
+      overflow-x: auto;
+      padding: 0.35rem 0.15rem 0.85rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mini-slide {
+      flex: 0 0 auto;
+      width: min(260px, 72vw);
+      aspect-ratio: 16 / 10;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      scroll-snap-align: start;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mini-slide-cover {
+      background: var(--pv-cover-bg, #fff);
+      justify-content: center;
+    }
+
+    .mini-slide-cover h3 {
+      margin: 0;
+      font-size: calc(0.95rem * var(--pv-title-scale, 1));
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--pv-cover-title, #111);
+    }
+
+    .mini-slide-cover .sub {
+      margin: 0.5rem 0 0;
+      font-size: 0.75rem;
+      color: var(--pv-cover-sub, #666);
+    }
+
+    .mini-slide-cover .tpl-tag {
+      margin: 0.65rem 0 0;
+      font-size: 0.68rem;
+      color: var(--pv-cover-sub, #666);
+      padding: 0.25rem 0.4rem;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 4px;
+      align-self: flex-start;
+    }
+
+    .mini-slide-content {
+      background: var(--pv-content-bg, #f8fafc);
+    }
+
+    .mini-slide-content h4 {
+      margin: 0 0 0.45rem;
+      font-size: calc(0.82rem * var(--pv-title-scale, 1));
+      font-weight: 700;
+      color: var(--pv-content-title, #111);
+      line-height: 1.3;
+    }
+
+    .mini-slide-content ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: calc(0.72rem * var(--pv-body-scale, 1));
+      color: var(--pv-body, #444);
+      line-height: 1.45;
+    }
+
+    .mini-slide-content details {
+      margin-top: 0.4rem;
+      font-size: 0.68rem;
+      color: var(--pv-body, #555);
+    }
+
+    .mini-slide-content summary {
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-dl {
+      padding: 0.65rem 1.15rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
+      background: linear-gradient(180deg, #059669, #047857);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
+    }
+
+    .btn-dl:hover:not(:disabled) {
+      filter: brightness(1.06);
+    }
+
+    .btn-dl:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .msg.info {
+      color: var(--text-secondary);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+    }
+
+    .style-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+      line-height: 1.4;
+    }
+
+    .style-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    @media (max-width: 520px) {
+      .style-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .style-row-2 select {
+      margin-bottom: 0;
+    }
+
+    .preview-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .preview-badges span {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid #bfdbfe;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M9 9h6M9 13h4" />
+        </svg>
+        DeepSeek · 教学课件
+      </div>
+      <h1>教学 PPT 自动生成</h1>
+      <p class="sub">根据主题与受众智能生成大纲；查看进度与预览后下载 .pptx。DeepSeek Key 由服务器配置，无需在页面填写。</p>
+    </header>
+
+    <form class="card" id="form" novalidate>
+      <div class="form-section">
+        <p class="section-title">内容与受众</p>
+        <label class="field-label" for="topic">课程主题</label>
+        <input id="topic" name="topic" type="text" required placeholder="可口语输入，如：生成什么是线性代数" title="失焦时会自动去掉「生成、帮我」等指令词" />
+        <p class="hint">提示：输入口语化描述亦可，系统会在失焦时规范为主题关键词。</p>
+
+        <label class="field-label" for="audience">受众</label>
+        <input id="audience" name="audience" type="text" value="大学生" />
+
+        <label class="field-label" for="slide_count">幻灯片页数（约）</label>
+        <input id="slide_count" name="slide_count" type="number" min="3" max="30" value="8" />
+      </div>
+
+      <div class="form-section">
+        <p class="section-title">外观</p>
+        <label class="field-label" for="template_preset">幻灯片风格</label>
+        <select id="template_preset" name="template_preset" title="内置配色与字体">
+          <optgroup label="经典">
+            <option value="simple" selected>简约 · 清爽层次</option>
+            <option value="cartoon">卡通 · 暖色活泼</option>
+            <option value="academic">学术风 · 藏青稳重</option>
+          </optgroup>
+          <optgroup label="场景主题">
+            <option value="forest">森林绿 · 自然 / 生物 / 环保</option>
+            <option value="ocean">海洋青 · 清爽通识课</option>
+            <option value="sunset">暖阳橙 · 班会 / 活动 / 破冰</option>
+            <option value="tech">科技深蓝 · 封面深色（理工 / 编程）</option>
+            <option value="elegant">典雅紫 · 人文 / 艺术</option>
+            <option value="chalk_dark">墨绿黑板 · 深色底浅色字（放映厅）</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <p class="section-title">个性化（可选）</p>
+        <p class="style-hint">整体配色与「幻灯片风格」可组合；标题/正文字号与颜色为固定可选项。选「跟随主题默认」则该项不覆盖内置值。</p>
+        <label class="field-label" for="style_palette">整体配色（背景基调）</label>
+        <select id="style_palette" name="style_palette" title="预设配色方案">
+          <option value="theme" selected>跟随所选幻灯片主题</option>
+          <option value="crisp">极简白灰</option>
+          <option value="business_blue">商务蓝</option>
+          <option value="nature_green">自然绿</option>
+          <option value="warm_coral">暖色活力</option>
+          <option value="slate">雅灰</option>
+          <option value="ink_dark">深色沉浸</option>
+        </select>
+        <div class="style-row-2">
+          <div>
+            <label class="field-label" for="style_title_size">标题字号</label>
+            <select id="style_title_size" name="style_title_size">
+              <option value="theme" selected>跟随主题默认</option>
+              <option value="compact">稍小</option>
+              <option value="enlarged">稍大</option>
+              <option value="prominent">更大</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="style_body_size">正文/要点字号</label>
+            <select id="style_body_size" name="style_body_size">
+              <option value="theme" selected>跟随主题默认</option>
+              <option value="compact">稍小</option>
+              <option value="enlarged">稍大</option>
+              <option value="prominent">更大</option>
+            </select>
+          </div>
+        </div>
+        <div class="style-row-2">
+          <div>
+            <label class="field-label" for="style_title_color">标题颜色</label>
+            <select id="style_title_color" name="style_title_color">
+              <option value="theme" selected>跟随当前配色</option>
+              <option value="charcoal">炭灰</option>
+              <option value="navy">藏青</option>
+              <option value="forest">森绿</option>
+              <option value="wine">酒红</option>
+              <option value="terracotta">陶土橙</option>
+              <option value="violet">紫罗兰</option>
+              <option value="snow">雪白字（深色底）</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="style_body_color">正文与副标题颜色</label>
+            <select id="style_body_color" name="style_body_color">
+              <option value="theme" selected>跟随当前配色</option>
+              <option value="slate">石板灰</option>
+              <option value="charcoal">深灰</option>
+              <option value="navy_soft">柔蓝灰</option>
+              <option value="brown">深棕</option>
+              <option value="green_soft">柔绿</option>
+              <option value="mist">浅灰字（深色底）</option>
+            </select>
+          </div>
+        </div>
+        <label class="field-label file-field" for="cover_image">封面配图（右侧）</label>
+        <input id="cover_image" name="cover_image" type="file" accept="image/jpeg,image/png,image/gif,image/webp,.jpg,.jpeg,.png,.gif,.webp" />
+        <label class="field-label file-field" for="logo_image">角标 / Logo（内容页右下）</label>
+        <input id="logo_image" name="logo_image" type="file" accept="image/jpeg,image/png,image/gif,image/webp,.jpg,.jpeg,.png,.gif,.webp" />
+      </div>
+
+      <button type="submit" id="btn">开始生成（预览后下载）</button>
+      <div class="msg" id="msg" hidden></div>
+    </form>
+
+    <section class="work-panel" id="workPanel" hidden>
+      <div class="progress-head">
+        <strong>生成进度</strong>
+        <span id="progressText">准备中…</span>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="steps" id="steps" aria-label="阶段">
+        <i data-stage="start">连接</i>
+        <i data-stage="llm">AI 大纲</i>
+        <i data-stage="building">合成 PPT</i>
+        <i data-stage="done">完成</i>
+      </div>
+      <div class="preview-head" id="previewHead" hidden>
+        内容与版式预览
+        <small>预览反映风格、整体配色及标题/正文字号与颜色选项；配图以角标提示。</small>
+        <div class="preview-badges" id="previewBadges" hidden></div>
+      </div>
+      <div class="preview-rail" id="previewRail" hidden></div>
+      <div class="actions-row">
+        <button type="button" class="btn-dl" id="btnDownload" disabled>下载 teaching.pptx</button>
+      </div>
+    </section>
+
+    <p class="footer-note">生成内容请结合课堂实际核对后再使用 · 服务端需配置 DEEPSEEK_API_KEY</p>
+  </div>
+
+  <script>
+    const form = document.getElementById("form");
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("btn");
+    const topicInput = document.getElementById("topic");
+    const page = document.querySelector(".page");
+    const workPanel = document.getElementById("workPanel");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const stepsEl = document.getElementById("steps");
+    const previewHead = document.getElementById("previewHead");
+    const previewRail = document.getElementById("previewRail");
+    const previewBadges = document.getElementById("previewBadges");
+    const btnDownload = document.getElementById("btnDownload");
+    const btnLabel = btn.textContent;
+
+    let topicNormalizeTimer = null;
+    let previewStyles = null;
+    let currentJobId = null;
+
+    function escapeHtml(s) {
+      const d = document.createElement("div");
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    async function loadPreviewStyles() {
+      try {
+        const r = await fetch("/api/simple/preset-preview-styles");
+        if (r.ok) previewStyles = await r.json();
+      } catch (_) {}
+    }
+    loadPreviewStyles();
+
+    topicInput.addEventListener("blur", () => {
+      const v = topicInput.value.trim();
+      if (!v) return;
+      clearTimeout(topicNormalizeTimer);
+      topicNormalizeTimer = setTimeout(async () => {
+        try {
+          const u = new URL("/api/simple/normalize-topic", window.location.origin);
+          u.searchParams.set("topic", topicInput.value);
+          const res = await fetch(u.toString(), { method: "GET" });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data.topic && data.topic !== topicInput.value.trim()) {
+            topicInput.value = data.topic;
+          }
+        } catch (_) {}
+      }, 600);
+    });
+
+    function showErr(text) {
+      msg.hidden = false;
+      msg.className = "msg err";
+      msg.textContent = text;
+    }
+
+    function clearMsg() {
+      msg.hidden = true;
+      msg.textContent = "";
+      msg.className = "msg";
+    }
+
+    function resetWorkUI() {
+      progressFill.style.width = "0%";
+      progressText.textContent = "准备中…";
+      previewHead.hidden = true;
+      previewBadges.hidden = true;
+      previewBadges.innerHTML = "";
+      previewRail.hidden = true;
+      previewRail.innerHTML = "";
+      btnDownload.disabled = true;
+      stepsEl.querySelectorAll("i").forEach((el) => {
+        el.classList.remove("on", "done");
+      });
+    }
+
+    function setProgress(d) {
+      const pct = typeof d.percent === "number" ? d.percent : 0;
+      progressFill.style.width = Math.min(100, Math.max(0, pct)) + "%";
+      progressText.textContent = d.message || "处理中…";
+      const stage = d.stage;
+      const order = ["start", "llm", "building", "done"];
+      const idx = order.indexOf(stage);
+      stepsEl.querySelectorAll("i").forEach((el) => {
+        const s = el.getAttribute("data-stage");
+        el.classList.remove("on", "done");
+        const si = order.indexOf(s);
+        if (si >= 0 && idx >= 0) {
+          if (si < idx) el.classList.add("done");
+          else if (si === idx) el.classList.add("on");
+        }
+      });
+    }
+
+    function applyPreviewVarsMerged(rail, data) {
+      const pid = data.template_preset || "simple";
+      const presets = (previewStyles && previewStyles.presets) || {};
+      const pals = (previewStyles && previewStyles.palettes) || {};
+      const titleColors = (previewStyles && previewStyles.title_colors) || {};
+      const bodyColors = (previewStyles && previewStyles.body_colors) || {};
+      const st = data.style || {};
+      const palId = st.palette || "theme";
+      let t;
+      if (palId !== "theme" && pals[palId]) {
+        const p = pals[palId];
+        t = {
+          coverBg: p.coverBg,
+          coverTitle: p.coverTitle,
+          coverSub: p.coverSub,
+          contentBg: p.contentBg,
+          contentTitle: p.contentTitle,
+          bodyText: p.bodyText,
+        };
+      } else {
+        const base = presets[pid] || presets.simple || {};
+        t = { ...base };
+      }
+      rail.style.setProperty("--pv-cover-bg", t.coverBg || "#fff");
+      rail.style.setProperty("--pv-cover-title", t.coverTitle || "#111");
+      rail.style.setProperty("--pv-cover-sub", t.coverSub || "#666");
+      rail.style.setProperty("--pv-content-bg", t.contentBg || "#f8fafc");
+      rail.style.setProperty("--pv-content-title", t.contentTitle || "#111");
+      rail.style.setProperty("--pv-body", t.bodyText || "#444");
+
+      const titleScales = { theme: 1, compact: 0.9, enlarged: 1.08, prominent: 1.16 };
+      const bodyScales = { theme: 1, compact: 0.92, enlarged: 1.06, prominent: 1.14 };
+      rail.style.setProperty("--pv-title-scale", String(titleScales[st.title_size] || 1));
+      rail.style.setProperty("--pv-body-scale", String(bodyScales[st.body_size] || 1));
+
+      const tcol = st.title_color;
+      if (tcol && tcol !== "theme" && titleColors[tcol]) {
+        rail.style.setProperty("--pv-cover-title", titleColors[tcol]);
+        rail.style.setProperty("--pv-content-title", titleColors[tcol]);
+      }
+      const bcol = st.body_color;
+      if (bcol && bcol !== "theme" && bodyColors[bcol]) {
+        rail.style.setProperty("--pv-body", bodyColors[bcol]);
+        rail.style.setProperty("--pv-cover-sub", bodyColors[bcol]);
+      }
+    }
+
+    function renderPreview(data) {
+      applyPreviewVarsMerged(previewRail, data);
+      previewRail.innerHTML = "";
+
+      const badges = [];
+      if (data.has_cover_image) badges.push("含封面配图");
+      if (data.has_logo) badges.push("含内容页角标");
+      if (badges.length) {
+        previewBadges.innerHTML = badges.map((b) => `<span>${escapeHtml(b)}</span>`).join("");
+        previewBadges.hidden = false;
+      } else {
+        previewBadges.innerHTML = "";
+        previewBadges.hidden = true;
+      }
+
+      const cover = document.createElement("article");
+      cover.className = "mini-slide mini-slide-cover";
+      let coverHtml = `<h3>${escapeHtml(data.topic || "")}</h3><p class="sub">受众：${escapeHtml(data.audience || "")}</p>`;
+      if (data.has_cover_image) {
+        coverHtml += '<p class="tpl-tag">封面右侧将插入您上传的图片</p>';
+      }
+      cover.innerHTML = coverHtml;
+      previewRail.appendChild(cover);
+
+      const slides = (data.deck && data.deck.slides) || [];
+      slides.forEach((s) => {
+        const art = document.createElement("article");
+        art.className = "mini-slide mini-slide-content";
+        const bullets = (s.bullets || []).map((b) => `<li>${escapeHtml(String(b))}</li>`).join("");
+        let inner = `<h4>${escapeHtml(s.title || "")}</h4>`;
+        inner += bullets ? `<ul>${bullets}</ul>` : "<p class=\"sub\">（本页以标题与讲稿为主）</p>";
+        if (s.notes) {
+          inner += `<details><summary>讲稿备注</summary><p>${escapeHtml(s.notes)}</p></details>`;
+        }
+        art.innerHTML = inner;
+        previewRail.appendChild(art);
+      });
+
+      previewHead.hidden = false;
+      previewRail.hidden = false;
+    }
+
+    async function consumeJobEvents(jobId) {
+      const res = await fetch(`/api/simple/jobs/${jobId}/events`, {
+        headers: { Accept: "text/event-stream" },
+      });
+      if (!res.ok || !res.body) {
+        const t = await res.text().catch(() => "");
+        throw new Error(t || res.statusText || "无法连接进度流");
+      }
+      const reader = res.body.getReader();
+      const dec = new TextDecoder();
+      let buffer = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (value) buffer += dec.decode(value, { stream: true });
+        let sep;
+        while ((sep = buffer.indexOf("\n\n")) >= 0) {
+          const block = buffer.slice(0, sep);
+          buffer = buffer.slice(sep + 2);
+          const dataLine = block.split("\n").find((l) => l.startsWith("data: "));
+          if (!dataLine) continue;
+          let d;
+          try {
+            d = JSON.parse(dataLine.slice(6));
+          } catch (_) {
+            continue;
+          }
+          if (d.type === "progress") setProgress(d);
+          if (d.type === "preview") renderPreview(d);
+          if (d.type === "done") {
+            setProgress({ stage: "done", percent: 100, message: d.message || "完成" });
+            stepsEl.querySelectorAll("i").forEach((el) => el.classList.add("done"));
+            stepsEl.querySelectorAll("i").forEach((el) => el.classList.remove("on"));
+            btnDownload.disabled = false;
+            return;
+          }
+          if (d.type === "error") throw new Error(d.detail || "生成失败");
+        }
+        if (done) break;
+      }
+      throw new Error("进度流意外结束，请重试。");
+    }
+
+    btnDownload.addEventListener("click", async () => {
+      if (!currentJobId) return;
+      btnDownload.disabled = true;
+      try {
+        const res = await fetch(`/api/simple/jobs/${currentJobId}/download`);
+        if (!res.ok) {
+          let detail = res.statusText;
+          try {
+            const j = await res.json();
+            if (j.detail) detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+          } catch (_) {
+            const t = await res.text();
+            if (t) detail = t.slice(0, 500);
+          }
+          showErr(detail);
+          btnDownload.disabled = false;
+          return;
+        }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "teaching.pptx";
+        a.click();
+        URL.revokeObjectURL(url);
+        msg.hidden = false;
+        msg.className = "msg info";
+        msg.textContent = "已开始下载。若需再次下载，请重新生成。";
+      } catch (err) {
+        showErr(String(err));
+      }
+      btnDownload.disabled = false;
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg();
+      btn.disabled = true;
+      btn.textContent = "生成中…";
+      workPanel.hidden = false;
+      page.classList.add("has-work");
+      resetWorkUI();
+
+      const fd = new FormData(form);
+
+      try {
+        const cr = await fetch("/api/simple/jobs", { method: "POST", body: fd });
+        if (!cr.ok) {
+          let detail = cr.statusText;
+          try {
+            const j = await cr.json();
+            if (j.detail) detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+          } catch (_) {
+            const t = await cr.text();
+            if (t) detail = t.slice(0, 500);
+          }
+          showErr(detail);
+          workPanel.hidden = true;
+          page.classList.remove("has-work");
+          return;
+        }
+        const { job_id: jobId } = await cr.json();
+        currentJobId = jobId;
+        await consumeJobEvents(jobId);
+      } catch (err) {
+        showErr(String(err));
+        workPanel.hidden = true;
+        page.classList.remove("has-work");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = btnLabel;
+      }
+    });
+  </script>
+</body>
+</html>

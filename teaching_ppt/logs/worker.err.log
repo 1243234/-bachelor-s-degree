@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\arq\__main__.py", line 4, in <module>
+    cli()
+    ~~~^^
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\arq\cli.py", line 54, in cli
+    run_worker(worker_settings_, **kwargs)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\arq\worker.py", line 894, in run_worker
+    worker = create_worker(settings_cls, **kwargs)
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\arq\worker.py", line 890, in create_worker
+    return Worker(**{**get_kwargs(settings_cls), **kwargs})
+  File "E:\cursor_workspace\teaching_ppt\.venv\Lib\site-packages\arq\worker.py", line 270, in __init__
+    self.loop = asyncio.get_event_loop()
+                ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\dell\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\events.py", line 715, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'MainThread'.
